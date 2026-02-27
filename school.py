@@ -61,13 +61,65 @@ def algebra():
 				mainProgram()
 
 def english():
-	print("Welcome to Algebra class!")
-	print("\nYou will be given 10 questions to answer each worth 10 points.")
-	print("In order to pass, you must get an 80%")
+	score = 0
+	fastSynonym = ["glad", "joyful", "cheerful", "content", "pleased",
+					"elated", "overjoyed", "thrilled", "ecstatic", "delighted", 
+					"serene", "satistied", "fulfilled", "at ease", "giddy", "buoyant", 
+					"sunny", "upbeat", "jubilant", "festive", "merry"]
+
+	print("Welcome to English class!")
+	print("\nYou will be given 5 questions to answer each worth 10 points.")
+	print("In order to pass, you must get an 40%")
 	ready = input("Are you ready? (y/n) ")
 	if ready.lower() == "y":
 		print("\nGetting Ready...")
 		time.sleep(5)
+		clear()
+		question1 = input("Synonym of 'happy': ")
+		if question1.lower() in fastSynonym:
+			score += 10
+		else:
+			score -= 5
+
+		question2 = input("\nAntonym of 'big': ")
+		if question2.lower() == "small":
+			score += 10
+		else:
+			score -= 5
+
+		question3 = input("\nPlural of 'child': ")
+		if question3.lower() == "children":
+			score += 10
+		else:
+			score -= 5
+
+		question4 = input("\nCorrect spelling (recieve or receive): ")
+		if question4.lower() == "receive":
+			score += 10
+		else:
+			score -= 5
+
+		question5 = input("\nOpposite of 'fast': ")
+		if question5.lower() == "slow":
+			score += 10
+		else:
+			score -= 5
+
+		if score >= 35:
+			print("Great Work!")
+			print(f"Score: {score}")
+			print("\nReturing to main program...")
+			time.sleep(2)
+			clear()
+			mainProgram()
+		else:
+			print("Try again nextime.")
+			print(f"Score: {score}")
+			print("\nReturing to main program...")
+			time.sleep(2)
+			clear()
+			mainProgram()
+			
 	else:
 		choice2 = int(input("\nOk. Would you like to exit (-1) or choose a different class (0): "))
 		match choice2:
@@ -80,10 +132,11 @@ def english():
 				clear()
 				mainProgram()
 
-def science():
-	print("Welcome to Algebra class!")
-	print("\nYou will be given 10 questions to answer each worth 10 points.")
-	print("In order to pass, you must get an 80%")
+def oceanography():
+	score = 0
+	print("Welcome to Oceanography class!")
+	print("\nYou will be given 5 questions to answer each worth 10 points.")
+	print("In order to pass, you must get an 40%")
 	ready = input("Are you ready? (y/n) ")
 	if ready.lower() == "y":
 		print("\nGetting Ready...")
@@ -101,9 +154,10 @@ def science():
 				mainProgram()
 
 def history():
-	print("Welcome to Algebra class!")
-	print("\nYou will be given 10 questions to answer each worth 10 points.")
-	print("In order to pass, you must get an 80%")
+	score = 0
+	print("Welcome to History class!")
+	print("\nYou will be given 5 questions to answer each worth 10 points.")
+	print("In order to pass, you must get an 40%")
 	ready = input("Are you ready? (y/n) ")
 	if ready.lower() == "y":
 		print("\nGetting Ready...")
@@ -121,9 +175,10 @@ def history():
 				mainProgram()
 
 def health():
-	print("Welcome to Algebra class!")
-	print("\nYou will be given 10 questions to answer each worth 10 points.")
-	print("In order to pass, you must get an 80%")
+	score = 0
+	print("Welcome to Health class!")
+	print("\nYou will be given 5 questions to answer each worth 10 points.")
+	print("In order to pass, you must get an 40%")
 	ready = input("Are you ready? (y/n) ")
 	if ready.lower() == "y":
 		print("\nGetting Ready...")
@@ -144,7 +199,7 @@ def mainProgram():
 	name = input("What is your name? ")
 	print(f"\nHello {name.capitalize()}! Welcome JANOS Academy!")
 
-	print("You have 5 classes to take today: \n\n(1) Algebra \n(2) English \n(3) Science \n(4) History \n(5) Health")
+	print("You have 5 classes to take today: \n\n(1) Algebra \n(2) English \n(3) Oceanography \n(4) History \n(5) Health")
 	subject = int(input("\nType the number to the class you would like to take first, or -1 to exit: "))
 
 	match subject:
@@ -156,18 +211,22 @@ def mainProgram():
 		case 2:
 			print("Switching to your English class...\n")
 			time.sleep(3)
+			clear()
 			english()
 		case 3:
-			print("Switching to your Science class...\n")
+			print("Switching to your Oceanography class...\n")
 			time.sleep(3)
+			clear()
 			science()
 		case 4:
 			print("Switching to your History class...\n")
 			time.sleep(3)
+			clear()
 			history()
 		case 5:
 			print("Switching to your Health class...\n")
 			time.sleep(3)
+			clear()
 			health()
 		case -1:
 			print("Now closing...")
