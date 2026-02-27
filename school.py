@@ -1,7 +1,7 @@
 import time
 import os
 
-PASS_SCORE = 40
+# PASS_SCORE = 35
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -233,3 +233,4 @@ def mainProgram():
 			time.sleep(2)
 
 mainProgram()
+
