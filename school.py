@@ -1,236 +1,197 @@
 import time
 import os
 
-# PASS_SCORE = 35
+PASS_SCORE = 35
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+# -----------------------------
+# Generic Quiz Engine
+# -----------------------------
+def run_quiz(title, questions):
+    """
+    title: name of the class
+    questions: list of dicts:
+        {
+            "prompt": "text",
+            "answer": correct_answer (string or int),
+            "points": 10
+        }
+    """
+
+    score = 0
+    print(f"Welcome to {title} class!")
+    print("\nYou will be given 5 questions worth 10 points each.")
+    print("You need at least 35 points to pass.")
+    ready = input("Are you ready? (y/n) ")
+
+    if ready.lower() != "y":
+        choice = input("\nOk. Would you like to {e}xit or {s}witch classes: ")
+        if choice == "s":
+            clear()
+            mainProgram()
+        else:
+            print("Now exiting...")
+            time.sleep(2)
+        return
+
+    print("\nGetting Ready...")
+    time.sleep(2)
+    clear()
+
+    # Ask each question
+    for q in questions:
+        user_input = input(q["prompt"] + " ")
+
+        # Convert to int if needed
+        if isinstance(q["answer"], int):
+            try:
+                user_input = int(user_input)
+            except:
+                user_input = None
+        else:
+            user_input = user_input.lower().strip()
+
+        # Check correctness
+        if user_input == q["answer"]:
+            score += q["points"]
+        else:
+            score -= 5
+
+    # Summary
+    clear()
+    print(f"--- {title} Summary ---")
+    print(f"Final Score: {score}")
+
+    if score >= PASS_SCORE:
+        print("Status: PASS")
+    else:
+        print("Status: FAIL")
+
+    # Retry option
+    retry = input("\nWould you like to retry this class? (y/n) ")
+    if retry.lower() == "y":
+        clear()
+        run_quiz(title, questions)
+        return
+
+    print("\nReturning to main program...")
+    time.sleep(2)
+    clear()
+    mainProgram()
+
+
+# -----------------------------
+# Class Question Sets
+# -----------------------------
+
 def algebra():
-	score = 0
-	print("Welcome to Algebra class!")
-	print("\nYou will be given 5 questions to answer each worth 10 points.")
-	print("In order to pass, you must get a 40%")
-	ready = input("Are you ready? (y/n) ")
-	if ready.lower() == "y":
-		print("\nGetting Ready...")
-		time.sleep(5)
-		clear()
-		question1 = int(input("Solve: 2x = 10: "))
-		if question1 == 5:
-			score += 10
-		else:
-			score -= 5
+    questions = [
+        {"prompt": "Solve: 2x = 10:", "answer": 5, "points": 10},
+        {"prompt": "Solve: x + 7 = 12:", "answer": 5, "points": 10},
+        {"prompt": "Solve: 3x = 21:", "answer": 7, "points": 10},
+        {"prompt": "Solve: x - 4 = 6:", "answer": 10, "points": 10},
+        {"prompt": "Solve: 5x = 25:", "answer": 5, "points": 10},
+    ]
+    run_quiz("Algebra", questions)
 
-		question2 = int(input("\nSolve: x + 7 = 12: "))
-		if question2 == 5:
-			score += 10
-		else:
-			score -= 5
-
-		question3 = int(input("\nSolve: 3x = 21: "))
-		if question3 == 7:
-			score += 10
-		else:
-			score -= 5
-
-		question4 = int(input("\nSolve: x - 4 = 6: "))
-		if question4 == 10:
-			score += 10
-		else:
-			score -= 5
-
-		question5 = int(input("\nSolve: 5x = 25: "))
-		if question5 == 5:
-			score += 10
-		else:
-			score -= 5
-
-		print(score)
-		time.sleep(5)
-	else:
-		choice2 = input("\nOk. Would you like to {e}xit or {s}witch classes: ")
-		match choice2:
-			case "e":
-				print("\nNow Exiting...")
-				time.sleep(5)
-			case "s":
-				print("\nNow returning to main program...")
-				time.sleep(3)
-				clear()
-				mainProgram()
 
 def english():
-	score = 0
-	fastSynonym = ["glad", "joyful", "cheerful", "content", "pleased",
-					"elated", "overjoyed", "thrilled", "ecstatic", "delighted", 
-					"serene", "satistied", "fulfilled", "at ease", "giddy", "buoyant", 
-					"sunny", "upbeat", "jubilant", "festive", "merry"]
+    happySynonym = [
+        "glad","joyful","cheerful","content","pleased","elated","overjoyed",
+        "thrilled","ecstatic","delighted","serene","satisfied","fulfilled",
+        "at ease","giddy","buoyant","sunny","upbeat","jubilant","festive","merry"
+    ]
 
-	print("Welcome to English class!")
-	print("\nYou will be given 5 questions to answer each worth 10 points.")
-	print("In order to pass, you must get an 40%")
-	ready = input("Are you ready? (y/n) ")
-	if ready.lower() == "y":
-		print("\nGetting Ready...")
-		time.sleep(5)
-		clear()
-		question1 = input("Synonym of 'happy': ")
-		if question1.lower() in fastSynonym:
-			score += 10
-		else:
-			score -= 5
+    questions = [
+        {"prompt": "Synonym of 'happy':", "answer": happySynonym, "points": 10},
+        {"prompt": "Antonym of 'big':", "answer": "small", "points": 10},
+        {"prompt": "Plural of 'child':", "answer": "children", "points": 10},
+        {"prompt": "Correct spelling (recieve or receive):", "answer": "receive", "points": 10},
+        {"prompt": "Opposite of 'fast':", "answer": "slow", "points": 10},
+    ]
 
-		question2 = input("\nAntonym of 'big': ")
-		if question2.lower() == "small":
-			score += 10
-		else:
-			score -= 5
+    # Special handling: allow list answers
+    for q in questions:
+        if isinstance(q["answer"], list):
+            correct_list = q["answer"]
+            q["answer"] = correct_list  # keep list
 
-		question3 = input("\nPlural of 'child': ")
-		if question3.lower() == "children":
-			score += 10
-		else:
-			score -= 5
+    run_quiz("English", questions)
 
-		question4 = input("\nCorrect spelling (recieve or receive): ")
-		if question4.lower() == "receive":
-			score += 10
-		else:
-			score -= 5
-
-		question5 = input("\nOpposite of 'fast': ")
-		if question5.lower() == "slow":
-			score += 10
-		else:
-			score -= 5
-
-		if score >= 35:
-			print("Great Work!")
-			print(f"Score: {score}")
-			print("\nReturing to main program...")
-			time.sleep(2)
-			clear()
-			mainProgram()
-		else:
-			print("Try again nextime.")
-			print(f"Score: {score}")
-			print("\nReturing to main program...")
-			time.sleep(2)
-			clear()
-			mainProgram()
-			
-	else:
-		choice2 = int(input("\nOk. Would you like to exit (-1) or choose a different class (0): "))
-		match choice2:
-			case -1:
-				print("\nNow Exiting...")
-				time.sleep(5)
-			case 0:
-				print("\nNow returning to main program...")
-				time.sleep(3)
-				clear()
-				mainProgram()
 
 def oceanography():
-	score = 0
-	print("Welcome to Oceanography class!")
-	print("\nYou will be given 5 questions to answer each worth 10 points.")
-	print("In order to pass, you must get an 40%")
-	ready = input("Are you ready? (y/n) ")
-	if ready.lower() == "y":
-		print("\nGetting Ready...")
-		time.sleep(5)
-	else:
-		choice2 = int(input("\nOk. Would you like to exit (-1) or choose a different class (0): "))
-		match choice2:
-			case -1:
-				print("\nNow Exiting...")
-				time.sleep(5)
-			case 0:
-				print("\nNow returning to main program...")
-				time.sleep(3)
-				clear()
-				mainProgram()
+    questions = [
+        {"prompt": "What is the largest ocean:", "answer": "pacific", "points": 10},
+        {"prompt": "Salt water covers about what % of the earth:", "answer": 70, "points": 10},
+        {"prompt": "What is the world's deepest trench:", "answer": "mariana", "points": 10},
+        {"prompt": "What do sea animals breathe with:", "answer": "gills", "points": 10},
+        {"prompt": "Which tool is used to measure water depth:", "answer": "sonar", "points": 10},
+    ]
+    run_quiz("Oceanography", questions)
+
 
 def history():
-	score = 0
-	print("Welcome to History class!")
-	print("\nYou will be given 5 questions to answer each worth 10 points.")
-	print("In order to pass, you must get an 40%")
-	ready = input("Are you ready? (y/n) ")
-	if ready.lower() == "y":
-		print("\nGetting Ready...")
-		time.sleep(5)
-	else:
-		choice2 = int(input("\nOk. Would you like to exit (-1) or choose a different class (0): "))
-		match choice2:
-			case -1:
-				print("\nNow Exiting...")
-				time.sleep(5)
-			case 0:
-				print("\nNow returning to main program...")
-				time.sleep(3)
-				clear()
-				mainProgram()
+    questions = [
+        {"prompt": "First US President:", "answer": "george washington", "points": 10},
+        {"prompt": "Where is the Great Wall located:", "answer": "china", "points": 10},
+        {"prompt": "When did the US gain independence:", "answer": 1776, "points": 10},
+        {"prompt": "When did the Civil War end:", "answer": 1865, "points": 10},
+        {"prompt": "Where are the Pyramids located:", "answer": "egypt", "points": 10},
+    ]
+    run_quiz("History", questions)
+
 
 def health():
-	score = 0
-	print("Welcome to Health class!")
-	print("\nYou will be given 5 questions to answer each worth 10 points.")
-	print("In order to pass, you must get an 40%")
-	ready = input("Are you ready? (y/n) ")
-	if ready.lower() == "y":
-		print("\nGetting Ready...")
-		time.sleep(5)
-	else:
-		choice2 = int(input("\nOk. Would you like to exit (-1) or choose a different class (0): "))
-		match choice2:
-			case -1:
-				print("\nNow Exiting...")
-				time.sleep(5)
-			case 0:
-				print("\nNow returning to main program...")
-				time.sleep(3)
-				clear()
-				mainProgram()
+    questions = [
+        {"prompt": "How many bones are in the adult body:", "answer": 206, "points": 10},
+        {"prompt": "Which organ pumps blood throughout the body:", "answer": "heart", "points": 10},
+        {"prompt": "What does BMI stand for:", "answer": "body mass index", "points": 10},
+        {"prompt": "What are muscles connected by:", "answer": "tendons", "points": 10},
+        {"prompt": "What do we breathe in:", "answer": "oxygen", "points": 10},
+    ]
+    run_quiz("Health", questions)
 
+
+# -----------------------------
+# Main Program
+# -----------------------------
 def mainProgram():
-	name = input("What is your name? ")
-	print(f"\nHello {name.capitalize()}! Welcome JANOS Academy!")
+    print("Welcome to JANOS Academy!")
+    print("\nClasses Available:")
+    print("(1) Algebra")
+    print("(2) English")
+    print("(3) Oceanography")
+    print("(4) History")
+    print("(5) Health")
+    print("(-1) Exit")
 
-	print("You have 5 classes to take today: \n\n(1) Algebra \n(2) English \n(3) Oceanography \n(4) History \n(5) Health")
-	subject = int(input("\nType the number to the class you would like to take first, or -1 to exit: "))
+    choice = input("\nChoose a class number: ")
 
-	match subject:
-		case 1:
-			print("Switching to your Algebra class...\n")
-			time.sleep(3)
-			clear()
-			algebra()
-		case 2:
-			print("Switching to your English class...\n")
-			time.sleep(3)
-			clear()
-			english()
-		case 3:
-			print("Switching to your Oceanography class...\n")
-			time.sleep(3)
-			clear()
-			science()
-		case 4:
-			print("Switching to your History class...\n")
-			time.sleep(3)
-			clear()
-			history()
-		case 5:
-			print("Switching to your Health class...\n")
-			time.sleep(3)
-			clear()
-			health()
-		case -1:
-			print("Now closing...")
-			time.sleep(2)
+    if not choice.isdigit() and choice != "-1":
+        clear()
+        print("Invalid input.")
+        return mainProgram()
+
+    choice = int(choice)
+
+    clear()
+
+    match choice:
+        case 1: algebra()
+        case 2: english()
+        case 3: oceanography()
+        case 4: history()
+        case 5: health()
+        case -1:
+            print("Goodbye!")
+            time.sleep(1)
+        case _:
+            print("Invalid choice.")
+            time.sleep(1)
+            clear()
+            mainProgram()
+
 
 mainProgram()
-
