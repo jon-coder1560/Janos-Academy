@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard - JANOS Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .leaderboard-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .leaderboard-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .leaderboard-section h3 {
+        color: #333;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 10px;
+    }
+
+    .leaderboard-entry {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #e0e0e0;
+        color: #333;
+    }
+
+    .leaderboard-entry:last-child {
+        border-bottom: none;
+    }
+
+    .rank {
+        font-weight: bold;
+        color: #667eea;
+        margin-right: 10px;
+    }
+
+    .placeholder {
+        text-align: center;
+        padding: 30px;
+        color: #999;
+        font-style: italic;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="leaderboard-container">
+    <h2 style="text-align: center; margin-bottom: 30px;">🏆 Leaderboard</h2>
+
+    <div class="leaderboard-section">
+        <h3>📊 Coming Soon!</h3>
+        <div class="placeholder">
+            <p>The leaderboard feature will track your best scores across all subjects!</p>
+            <p style="margin-top: 15px; font-size: 0.9em;">
+                This will be implemented in the next version with:
+            </p>
+            <ul style="text-align: left; display: inline-block; margin-top: 10px;">
+                <li>Personal best scores</li>
+                <li>Subject rankings</li>
+                <li>Overall progress</li>
+                <li>Achievement badges</li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/" class="btn">Back to Home</a>
+    </div>
+</div>
+{% endblock %}

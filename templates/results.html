@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Results - JANOS Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .results-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .results-card {
+        background: #f8f9fa;
+        padding: 40px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+    }
+
+    .results-title {
+        font-size: 2em;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .score-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px auto;
+        font-size: 3em;
+        font-weight: bold;
+        color: white;
+    }
+
+    .score-circle.pass {
+        background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    }
+
+    .score-circle.fail {
+        background: linear-gradient(135deg, #f44336 0%, #da190b 100%);
+    }
+
+    .status {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+
+    .status.pass {
+        color: #4caf50;
+    }
+
+    .status.fail {
+        color: #f44336;
+    }
+
+    .info-text {
+        color: #666;
+        line-height: 1.6;
+        margin: 20px 0;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .btn-full {
+        flex: 1;
+        min-width: 150px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <div class="results-card">
+        <h1 class="results-title">{{ title }} Results</h1>
+        
+        <div class="score-circle {% if passed %}pass{% else %}fail{% endif %}">
+            {{ score }}
+        </div>
+
+        <div class="status {% if passed %}pass{% else %}fail{% endif %}">
+            {% if passed %}
+                🎉 YOU PASSED! 🎉
+            {% else %}
+                ❌ YOU FAILED
+            {% endif %}
+        </div>
+
+        <div class="info-text">
+            <p>Your Score: <strong>{{ score }} / 50</strong></p>
+            <p>Passing Score: <strong>{{ pass_score }}</strong></p>
+            {% if passed %}
+                <p style="color: #4caf50; font-weight: bold;">Great job! You've mastered this subject!</p>
+            {% else %}
+                <p style="color: #f44336; font-weight: bold;">Don't worry, you can try again anytime!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="button-group">
+        <a href="/quiz/{{ class_name }}" class="btn btn-full">Retry This Class</a>
+        <a href="/" class="btn btn-secondary btn-full">Choose Another Class</a>
+    </div>
+</div>
+{% endblock %}
