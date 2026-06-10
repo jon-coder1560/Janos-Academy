@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Home - JANOS Academy{% endblock %}
+
+{% block extra_css %}
+<style>
+    .classes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .class-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 30px 20px;
+        border-radius: 10px;
+        text-align: center;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 150px;
+    }
+
+    .class-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .class-card h3 {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .class-card p {
+        font-size: 0.9em;
+        opacity: 0.9;
+    }
+
+    .info-section {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+        border-left: 4px solid #667eea;
+    }
+
+    .info-section h3 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .info-section p {
+        color: #666;
+        line-height: 1.6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<p style="text-align: center; color: #666; margin-bottom: 30px;">
+    Choose a subject and answer 5 questions to earn a passing score. 
+    Get 35+ points to pass!
+</p>
+
+<div class="classes-grid">
+    {% for key, class_data in classes.items() %}
+    <a href="/quiz/{{ key }}" class="class-card">
+        <h3>{{ class_data.title }}</h3>
+        <p>{{ class_data.description }}</p>
+    </a>
+    {% endfor %}
+</div>
+
+<div class="info-section">
+    <h3>📋 How It Works</h3>
+    <p>
+        <strong>Scoring:</strong> Each correct answer earns +10 points. Incorrect answers lose -5 points.<br>
+        <strong>Passing Grade:</strong> You need at least 35 points to pass.<br>
+        <strong>Retry:</strong> Not satisfied with your score? Retry any class as many times as you want!
+    </p>
+</div>
+
+<div class="info-section">
+    <h3>🎯 Subject Overview</h3>
+    <p>
+        <strong>Algebra:</strong> Solve mathematical equations<br>
+        <strong>English:</strong> Vocabulary, spelling, and grammar<br>
+        <strong>Oceanography:</strong> Ocean and marine life knowledge<br>
+        <strong>History:</strong> Historical events and figures<br>
+        <strong>Health:</strong> Human anatomy and wellness
+    </p>
+</div>
+
+<div style="text-align: center; margin-top: 30px;">
+    <a href="/leaderboard" class="btn btn-secondary">View Leaderboard</a>
+</div>
+{% endblock %}
